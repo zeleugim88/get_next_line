@@ -21,7 +21,12 @@ size_t	ft_strlen(char *s)
 		i++;
 	return (i);
 }
-
+/*
+strchr function in C, which searches for the first occurrence of the character c in the string s. 
+The function returns a pointer to the first occurrence of the character c in the string s. 
+If the character is not found, the function returns a null pointer. 
+If the input string s is a null pointer, the function returns a null pointer as well.
+*/
 char	*ft_strchr(char *s, int c)
 {
 	int	i;
@@ -30,7 +35,7 @@ char	*ft_strchr(char *s, int c)
 	if (!s)
 		return (0);
 	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
+		return ((char *)&s[ft_strlen(s)]); //if it is not casted, does it not work?
 	while (s[i])
 	{
 		if (s[i] == (char) c)
@@ -39,6 +44,12 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (0);
 }
+/*
+The string pointer is casted to (char *) because it's being returned as a pointer to a character, 
+and the function definition specifies the return type as char *. 
+The casting ensures that the pointer's type matches the expected return type. 
+It is a way to tell the compiler that the data type of the pointer has changed, in this case from char * to char.
+*/
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -67,7 +78,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (str);
 }
-
+/*
+ft_line is a function that takes a string str as an argument and returns 
+a new string that contains the characters from str up to but not including 
+the first newline character ('\n'). If the input string str does not contain a 
+newline character, the function returns a copy of the entire str. 
+If the allocation of the new string fails, the function returns NULL.
+*/
 char	*ft_line(char *str)
 {
 	int		i;
@@ -78,7 +95,7 @@ char	*ft_line(char *str)
 		return (NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
-	tab = (char *)malloc(sizeof(char) * (i + 2));
+	tab = (char *)malloc(sizeof(char) * (i + 2)); //por que 2?
 	if (!tab)
 		return (NULL);
 	i = 0;
@@ -93,7 +110,7 @@ char	*ft_line(char *str)
 		i++;
 	}
 	tab[i] = '\0';
-	return (tab);
+	return (tab); //el string seria woifwlk\n\0 --> con salto de linea al final?
 }
 
 char	*ft_next_str(char *str)
@@ -104,20 +121,23 @@ char	*ft_next_str(char *str)
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-	{
+		i++; //finds the position of \n
+	if (!str[i]) //???? If the newline character is not found, it frees the input string and returns NULL.
+	{//si se encontro \n antes, por que ahora no se ecuentra??
 		free(str);
 		return (NULL);
-	}
+	}//it allocates a new string of size equal to the length of the input string 
+	//minus the length of the string up to the newline character, plus one for the null terminator.
 	tab = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!tab)
 		return (NULL);
 	i++;
 	j = 0;
-	while (str[i])
+	while (str[i]) //It then copies the remaining part of the input string 
+	//(after the newline character) into the new string. 
 		tab[j++] = str[i++];
 	tab[j] = '\0';
+	//Finally, it frees the input string and returns a pointer to the newly allocated string.
 	free(str);
 	return (tab);
 }

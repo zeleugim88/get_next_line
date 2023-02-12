@@ -12,6 +12,9 @@
 
 #include "get_next_line.h"
 
+//ft_read function reads from the file descriptor.
+//and concatenates the new data to the existing content until it finds a newline 
+//character or reaches the end of the file.
 char	*ft_read(int fd, char *str)
 {
 	char	*buff;
@@ -36,14 +39,21 @@ char	*ft_read(int fd, char *str)
 	free(buff);
 	return (str);
 }
+/*
+This is a function that reads a line from a file descriptor and returns it as a string. 
+The line is defined as a sequence of characters ending with a newline character ('\n') 
+or the end of the file (EOF).*/
 
 char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*str;
-
+//The function first checks if the file descriptor passed as an argument is valid 
+//(i.e., it is not negative or the buffer size is not set to 0).
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
+/*it calls the ft_read function to read from the file descriptor and store the 
+content in the static variable str.*/
 	str = ft_read(fd, str);
 	if (!str)
 		return (NULL);
